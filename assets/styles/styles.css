@@ -2,11 +2,33 @@
     margin: 8px;
 }
 
+nav {
+    margin-bottom: 8rem;
+}
 
+/* UV Index Color Code. Green=OK, Orange=Med, Red=Severe */
+.green {
+    background-color:green;
+    color: white;
+    margin-left: 20px;
+    padding: 15px;
+    margin-bottom: 30px;
+    border: none;
+}
 
-/* Selectable UI */
-#feedback { font-size: 1.4em; }
-#selectable .ui-selecting { background: #FECA40; }
-#selectable .ui-selected { background: #F39814; color: white; }
-#selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-#selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+.orange {
+  background-color: orange;
+  color: white;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: none;
+}
+
+.red {
+  background-color: red;
+  color: white;
+  margin-left: 20px;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: none;
+}

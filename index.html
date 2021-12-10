@@ -16,69 +16,60 @@
 <body>
     <nav class="navbar bg-primary text-black-50">
         <div class="container">
-          <span class="navbar-brand h1 fs-3">Weather Dashboard</span>
+          <span class="navbar-brand m-auto">Weather Dashboard</span>
         </div>
     </nav>
 
-    <section>
-        <label id = "citySearch" for="cityName">Search City by Zipcode:</label>
-        <input type="city" id="cityName">
+  <div class = "container">
+    <div class = "row">
+    <aside class="col-lg-3 py-3 bg-primary">
+        <h2>Search by City</h2>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Atlanta" id="city" required />
+            <button class="btn btn-secondary my-2 my-sm-0" id="search" type="submit">
+              <label>Search</label>
+            </button>
+            <div class="card w-100 mt-5 " id="past-search">
+              <div class="card-header">
+                Recent Searches
+              </div>
+              <ul class="list-group" id="last-searched">
+               </ul> 
+            </div>
+          </form>
+        </aside>        
+    </aside>
+
+    <section id="weather-info" class="col-lg-9">
+      <div class="container-fluid py-5 bg-primary text-light my-3" id="city-data">
+        <h1 class="display-5 mb-4 fw-bold"><span id="name"></span> <span id="date-today"></span> <img
+            id="icon" /></h1>
+        <p class="lead">
+          Temp: <span id="temp"></span id="temp">
+        </p>
+        <p class="lead">
+          Humidity: <span id="humidity"></span>
+        </p>
+        <p class="lead">
+          Wind Speed: <span id="windspeed"></span>
+        </p>
+        <p class="lead">
+          UV Index: <span id="uvi"></span>
+        </p>
+      </div>
+      <div id="forecast">
+        <h2 class="display-5 fw-bold w-100" id="title">5 Day Forecast: </h2>
+        <div class="row m-auto" id="city-forecast">              
+        </div>
+      </div>
     </section>
+    </div>
+  </div>
 
-    <section class="px-2">
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-    </section>
 
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.0-rc.3/jquery-ui.min.js" integrity="sha256-R6eRO29lbCyPGfninb/kjIXeRjMOqY3VWPVk6gMhREk=" crossorigin="anonymous"></script>
   <script src="./assets/scripts/java.js"></script>
 </body>
