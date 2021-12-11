@@ -1,6 +1,8 @@
 //Unique API Key.
 const APIKEY = "e32d5c12dfa1e703c5f375a170a75b00";
 
+var searchCity = document.querySelector("#citySearch");
+var pickHistory = document.querySelector("#searchHistory");
 
 //fucntion to run and get current weather information
 function getCurrentWeather(city) {
@@ -12,8 +14,7 @@ function getCurrentWeather(city) {
                  }
         return response.json();
             })
-    .then(function(data) {
-        console.log(data);    
+    .then(function(data) {  
         $("#name").text(data.name);      
         $("#date").text(`(${moment().format("l")})`);      
         $("#icon").attr(
@@ -34,7 +35,6 @@ function getCurrentWeather(city) {
     });
 }
 
-
 //function to check the UV index.
 function uvIndexCheck(lat, lon) {
     var uvIndex = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&units=imperial&appid="+APIKEY;
@@ -46,8 +46,6 @@ function uvIndexCheck(lat, lon) {
         return response.json();
             })
     .then(function(data) {
-        console.log(data);
-        console.log(data.current.uvi);
         var uvInd = data.current.uvi;
         if(uvInd <= 2.0) {
             //UVI Good
@@ -65,7 +63,7 @@ function uvIndexCheck(lat, lon) {
     });
 }
 
-
+//fetch 5 days weather information and creates card for each day
 function fiveDayForecast(lat,lon) {
     var weatherInfo = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&units=imperial&appid="+APIKEY;
     fetch(weatherInfo)
@@ -76,13 +74,12 @@ function fiveDayForecast(lat,lon) {
         return response.json();
             })
     .then(function(data) {
-        console.log(data.daily);
         var createCard =""
         for(var x = 1; x < 6; x++) {
             var icon = data.daily[x].weather[0].icon;
             var date = moment.unix(data.daily[x].dt).format("MM-DD-YYYY");
             createCard += `
-            <div class="card text-white bg-dark col s12 m6">
+            <div class="card text-white bg-primary col s12 m6">
                 <div class="card-header text-center font-weight-bold">${date}</div>
                 <div class="card-body">
                 <p class="card-text text-center">
@@ -103,25 +100,60 @@ function fiveDayForecast(lat,lon) {
     });
 }
 
+//Checks if search field has content
+function checkCity(event) {
+    event.preventDefault();
 
-
-getCurrentWeather("lawrenceville");
-
-/*Search button for applied City
-$(document).ready(function () {
-    $("#search").on("click", function (event) {
-      event.preventDefault();
-      var city = $("#city").val();
-      if (city == "") {
+    var city = document.querySelector("#city").value;
+    if(city == "") {
         return;
-      } else {
-        CityWeather(city);
-        addToRecentSearches(city);
-      }
-    });
+    } else {
+        getCurrentWeather(city);
+        recentSearch(city);
+    }
 
-//Check previously searched city and return previous info
-$("#last-searched").on("click", "li.list-group-item", function () {
-    var city = $(this).text();
-    CityWeather(city);
-  })*/
+}
+
+
+//Loads history selected
+function historyPicker(event) {
+    event.preventDefault();
+    var city = $(this).value;
+    console.log(city);
+    getCurrentWeather(city);
+}
+
+var cities = [];
+//adds search to recent search history
+function recentSearch(city) {
+    var addCity = document.createElement("button");
+    addCity.setAttribute("class","list-group-item historyBtn");
+    addCity.setAttribute("value", city);
+    addCity.textContent = city;
+    document.getElementById("searchHistory").append(addCity);
+
+    cities.push(city);
+    localStorage.setItem("searches",JSON.stringify(cities));
+}
+
+
+//loads stored history
+function loadHistory() {
+    var searches = JSON.parse(localStorage.getItem("searches"));
+    if(searches != null){
+    for(var x = 0; x < searches.length; x++) {
+        var addCity = document.createElement("button");
+        addCity.setAttribute("class","list-group-item historyBtn");
+        addCity.setAttribute("value", city);
+        addCity.textContent = searches[x];
+        document.getElementById("searchHistory").append(addCity);
+    } }
+}
+
+//Default Weather display and load local storage history search
+getCurrentWeather("Atlanta");
+loadHistory();
+
+//Button event reader
+searchCity.addEventListener('submit',checkCity);
+pickHistory.addEventListener('click',historyPicker);
