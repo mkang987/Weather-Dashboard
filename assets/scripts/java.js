@@ -2,9 +2,8 @@
 const APIKEY = "e32d5c12dfa1e703c5f375a170a75b00";
 
 var searchCity = document.querySelector("#citySearch");
-var pickHistory = document.querySelector("#searchHistory");
 
-//fucntion to run and get current weather information
+//function to run and get current weather information
 function getCurrentWeather(city) {
     var cityWeather = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=imperial&appid="+APIKEY;
     fetch(cityWeather)
@@ -115,14 +114,6 @@ function checkCity(event) {
 }
 
 
-//Loads history selected
-function historyPicker(event) {
-    event.preventDefault();
-    var city = $(this).value;
-    console.log(city);
-    getCurrentWeather(city);
-}
-
 var cities = [];
 //adds search to recent search history
 function recentSearch(city) {
@@ -130,6 +121,10 @@ function recentSearch(city) {
     addCity.setAttribute("class","list-group-item historyBtn");
     addCity.setAttribute("value", city);
     addCity.textContent = city;
+    addCity.onclick = (e)=>{
+        console.log(e.target.getAttribute('value'));
+        getCurrentWeather(e.target.getAttribute('value'));
+    }
     document.getElementById("searchHistory").append(addCity);
 
     cities.push(city);
@@ -140,12 +135,17 @@ function recentSearch(city) {
 //loads stored history
 function loadHistory() {
     var searches = JSON.parse(localStorage.getItem("searches"));
+    console.log(searches);
     if(searches != null){
     for(var x = 0; x < searches.length; x++) {
         var addCity = document.createElement("button");
         addCity.setAttribute("class","list-group-item historyBtn");
-        addCity.setAttribute("value", city);
+        addCity.setAttribute("value", searches[x]);
         addCity.textContent = searches[x];
+        addCity.onclick = (e)=>{
+            console.log(e.target.getAttribute('value'));
+            getCurrentWeather(e.target.getAttribute('value'));
+        }
         document.getElementById("searchHistory").append(addCity);
     } }
 }
@@ -156,4 +156,3 @@ loadHistory();
 
 //Button event reader
 searchCity.addEventListener('submit',checkCity);
-pickHistory.addEventListener('click',historyPicker);
